@@ -4,24 +4,24 @@ Kiosk dashboard for the Coding & Social Lounge TV (Raspberry Pi friendly).
 
 Shows upcoming campus/lounge events, Spotify Now Playing, and a dynamic Spotify Jam QR code.
 
-## Quick start (on your Windows PC)
+## Quick start
 
 ### 1. Install Node.js (one-time, if needed)
 
-Preferred: install **LTS** from [nodejs.org](https://nodejs.org/), then reopen Cursor / PowerShell.
+Install **LTS** from [nodejs.org](https://nodejs.org/), then open a new terminal.
 
 Check:
 
-```powershell
+```bash
 node -v
 npm -v
 ```
 
 ### 2. Install and run this project
 
-In PowerShell, from this project folder:
+From this project folder:
 
-```powershell
+```bash
 npm install
 npm run dev
 ```
@@ -32,8 +32,6 @@ Then open in your browser:
 - Admin / DJ: [http://127.0.0.1:3000/admin](http://127.0.0.1:3000/admin)
 
 You should immediately see **demo events** and a **demo Now Playing** track — no Spotify or calendar required yet.
-
-> **Already running?** If the agent started the server for you, just open those links now — no need to start it again.
 
 ### 3. Try the Jam QR (no Spotify app needed)
 
