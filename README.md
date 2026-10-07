@@ -19,10 +19,9 @@ npm -v
 
 ### 2. Install and run this project
 
-In PowerShell, from this folder:
+In PowerShell, from this project folder:
 
 ```powershell
-cd "d:\CSL RASPBERRY PI DASHBOARD\CSL-Dashboard"
 npm install
 npm run dev
 ```
