@@ -45,6 +45,7 @@ let posterIndex = 0;
 let posterTimer = null;
 let posterEvents = [];
 let eventsScrollRaf = null;
+let eventsScrollTimer = null;
 let eventsScrollOffset = 0;
 
 function pad(n) {
@@ -170,6 +171,10 @@ function stopEventsScroll() {
     cancelAnimationFrame(eventsScrollRaf);
     eventsScrollRaf = null;
   }
+  if (eventsScrollTimer) {
+    clearTimeout(eventsScrollTimer);
+    eventsScrollTimer = null;
+  }
   eventsScrollOffset = 0;
 }
 
@@ -202,31 +207,60 @@ function startEventsScroll() {
 
   // Wait a frame so layout settles, then scroll only if content overflows.
   requestAnimationFrame(() => {
-    const overflow = track.scrollHeight > els.eventsList.clientHeight + 12;
-    if (!overflow) {
+    const maxOffset = Math.max(0, track.scrollHeight - els.eventsList.clientHeight);
+    if (maxOffset <= 12) {
       track.style.transform = '';
+      track.style.opacity = '';
+      track.style.transition = '';
       return;
     }
 
-    // Duplicate list for a seamless loop.
-    if (track.dataset.duplicated !== 'true') {
-      track.innerHTML += track.innerHTML;
-      track.dataset.duplicated = 'true';
-    }
-
     const speed = 0.22; // px per frame ≈ slow TV crawl
+    const fadeMs = 700;
+    const holdMs = 1800;
 
-    const tick = () => {
-      eventsScrollOffset += speed;
-      const loopAt = track.scrollHeight / 2;
-      if (loopAt > 0 && eventsScrollOffset >= loopAt) {
-        eventsScrollOffset -= loopAt;
-      }
-      track.style.transform = `translateY(${-eventsScrollOffset}px)`;
+    const setOffset = (y) => {
+      eventsScrollOffset = y;
+      track.style.transform = `translateY(${-y}px)`;
+    };
+
+    track.style.transition = '';
+    track.style.opacity = '1';
+    setOffset(0);
+
+    const scrollDown = () => {
+      const tick = () => {
+        eventsScrollOffset += speed;
+        if (eventsScrollOffset >= maxOffset) {
+          setOffset(maxOffset);
+          eventsScrollRaf = null;
+          // Hold on the last items, then crossfade back to the top.
+          eventsScrollTimer = setTimeout(crossfadeToTop, holdMs);
+          return;
+        }
+        setOffset(eventsScrollOffset);
+        eventsScrollRaf = requestAnimationFrame(tick);
+      };
       eventsScrollRaf = requestAnimationFrame(tick);
     };
 
-    eventsScrollRaf = requestAnimationFrame(tick);
+    const crossfadeToTop = () => {
+      track.style.transition = `opacity ${fadeMs}ms ease`;
+      track.style.opacity = '0';
+      eventsScrollTimer = setTimeout(() => {
+        setOffset(0);
+        requestAnimationFrame(() => {
+          track.style.opacity = '1';
+          eventsScrollTimer = setTimeout(() => {
+            track.style.transition = '';
+            // Brief beat at the top, then scroll through again.
+            eventsScrollTimer = setTimeout(scrollDown, holdMs);
+          }, fadeMs);
+        });
+      }, fadeMs);
+    };
+
+    eventsScrollTimer = setTimeout(scrollDown, holdMs);
   });
 }
 

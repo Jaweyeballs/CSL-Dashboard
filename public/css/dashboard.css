@@ -560,7 +560,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  will-change: transform;
+  will-change: transform, opacity;
+  opacity: 1;
 }
 
 .event-card {
