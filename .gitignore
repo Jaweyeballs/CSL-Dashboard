@@ -1,0 +1,10 @@
+node_modules/
+.env
+data/spotify-tokens.json
+data/jam.json
+data/calendar-cache.json
+data/manual-events.json
+public/uploads/posters/*
+!public/uploads/posters/.gitkeep
+.DS_Store
+*.log

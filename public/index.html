@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSL Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="ambient" id="ambient" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <img
+          class="brand-logo"
+          src="/img/csl-logo.png"
+          alt="Coding &amp; Social Lounge"
+          width="72"
+          height="72"
+        />
+        <strong class="brand-name">Coding &amp; Social Lounge</strong>
+      </div>
+      <div class="clock" id="clock">
+        <div class="clock-time" id="clockTime">--:--</div>
+        <div class="clock-date" id="clockDate">—</div>
+      </div>
+    </header>
+
+    <main class="layout" id="layout">
+      <section class="panel poster-panel" aria-label="Featured event posters">
+        <div class="poster-stage" id="posterStage">
+          <div class="empty-state">Loading posters…</div>
+        </div>
+        <div class="poster-dots" id="posterDots" aria-hidden="true"></div>
+      </section>
+
+      <section class="right-column">
+        <div class="panel music-panel" id="musicPanel" data-jam="false" data-playing="false">
+          <div class="now-playing" id="nowPlaying">
+            <div class="panel-head compact">
+              <h1>Now Playing</h1>
+            </div>
+            <div class="track-stage">
+              <div class="art-wrap" id="artWrap">
+                <img
+                  id="artA"
+                  class="album-art is-front is-idle"
+                  src="/img/csl-logo.png"
+                  alt="Coding &amp; Social Lounge"
+                />
+                <img
+                  id="artB"
+                  class="album-art is-idle"
+                  src="/img/csl-logo.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </div>
+              <div class="track-meta">
+                <div class="track-title" id="trackTitle">Nothing!</div>
+                <div class="track-artist" id="trackArtist"></div>
+                <div class="track-album" id="trackAlbum"></div>
+                <div class="progress">
+                  <div class="progress-bar"><span id="progressFill"></span></div>
+                  <div class="progress-times">
+                    <span id="progressCurrent">0:00</span>
+                    <span id="progressDuration">0:00</span>
+                  </div>
+                </div>
+              </div>
+              <aside class="jam-corner" id="jamPanel" hidden aria-label="Spotify Jam QR">
+                <div class="jam-title">Scan to hop in the jam!</div>
+                <img
+                  id="jamQr"
+                  class="jam-qr"
+                  alt="Spotify Jam QR code"
+                />
+              </aside>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel events-panel" aria-label="Upcoming events">
+          <div class="panel-head compact">
+            <h1>Upcoming</h1>
+          </div>
+          <div class="events-list" id="eventsList">
+            <div class="empty-state">Loading events…</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="ticker" aria-label="Announcements">
+      <div class="ticker-label">Now</div>
+      <div class="ticker-track">
+        <div class="ticker-content" id="tickerContent"></div>
+      </div>
+    </footer>
+
+    <script type="module" src="/js/dashboard.js"></script>
+  </body>
+</html>

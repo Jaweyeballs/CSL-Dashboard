@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSL DJ Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header>
+        <a class="back" href="/">← Dashboard</a>
+        <h1>CSL DJ Desk</h1>
+        <p>Connect Spotify, drop a Jam link, and post lounge events for the TV.</p>
+      </header>
+
+      <section class="card">
+        <h2>Status</h2>
+        <ul class="status" id="statusList">
+          <li>Loading…</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Spotify</h2>
+        <p class="help">
+          Connect Spotify and log in to display music. Don’t forget to disconnect when you’re done.
+        </p>
+        <div class="row">
+          <a class="btn" id="connectSpotify" href="/auth/spotify">Connect Spotify</a>
+          <button class="btn ghost" id="disconnectSpotify" type="button">
+            Disconnect current Spotify
+          </button>
+        </div>
+        <p class="note" id="spotifyNote"></p>
+      </section>
+
+      <section class="card">
+        <h2>Spotify Jam QR</h2>
+        <p class="help">Paste your Jam link here.</p>
+        <label class="field">
+          <span>Jam invite URL</span>
+          <input
+            id="jamUrl"
+            type="url"
+            placeholder="https://open.spotify.com/..."
+            autocomplete="off"
+          />
+        </label>
+        <div class="row">
+          <button class="btn" id="saveJam" type="button">Save Jam link</button>
+          <button class="btn ghost" id="clearJam" type="button">End Jam display</button>
+        </div>
+        <p class="note" id="jamNote"></p>
+        <div class="preview">
+          <img id="qrPreview" src="/api/jam/qr.svg" alt="Jam QR preview" />
+        </div>
+      </section>
+
+      <section class="card" id="eventFormCard">
+        <h2 id="eventFormTitle">Add event / poster</h2>
+        <p class="help">
+          Upload or paste your poster image, and fill out the details of your event.
+        </p>
+
+        <div
+          class="poster-drop"
+          id="posterDrop"
+          tabindex="0"
+          aria-label="Poster upload area"
+        >
+          <img id="posterPreview" alt="" hidden />
+          <div class="poster-drop-copy" id="posterDropCopy">
+            <strong>Drop / paste / choose poster</strong>
+            <span>PNG, JPG, or WebP · optional</span>
+          </div>
+          <input id="posterFile" type="file" accept="image/*" hidden />
+        </div>
+        <div class="row">
+          <button class="btn ghost" id="choosePoster" type="button">Choose image</button>
+          <button class="btn ghost" id="clearPoster" type="button">Remove image</button>
+        </div>
+
+        <label class="field">
+          <span>Event title</span>
+          <input id="eventTitle" type="text" placeholder="CSL Open Mic Night" required />
+        </label>
+        <label class="field">
+          <span>Room / location</span>
+          <input id="eventLocation" type="text" placeholder="Coding & Social Lounge" />
+        </label>
+        <div class="grid-2">
+          <label class="field">
+            <span>Day</span>
+            <input id="eventDate" type="date" required />
+          </label>
+          <label class="field checkbox">
+            <input id="eventAllDay" type="checkbox" />
+            <span>All-day event</span>
+          </label>
+        </div>
+        <div class="grid-2" id="timeFields">
+          <label class="field">
+            <span>Start time</span>
+            <input id="eventStartTime" type="time" value="18:00" />
+          </label>
+          <label class="field">
+            <span>End time <em class="optional">(optional)</em></span>
+            <input id="eventEndTime" type="time" />
+          </label>
+        </div>
+        <label class="field">
+          <span>Campus / host</span>
+          <select id="eventCampus">
+            <option value="csl">CSL hosted event</option>
+            <option value="college-ave">College Ave</option>
+            <option value="busch">Busch</option>
+            <option value="livingston">Livingston</option>
+            <option value="cook-doug">Cook/Doug</option>
+          </select>
+        </label>
+        <div class="row">
+          <button class="btn" id="saveEvent" type="button">Post to dashboard</button>
+          <button class="btn ghost" id="cancelEdit" type="button" hidden>Cancel edit</button>
+        </div>
+        <p class="note" id="eventNote"></p>
+      </section>
+
+      <section class="card">
+        <h2>Posted events</h2>
+        <div id="adminEvents" class="admin-events">
+          <p class="help">No staff-posted events yet.</p>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/js/admin.js"></script>
+  </body>
+</html>
